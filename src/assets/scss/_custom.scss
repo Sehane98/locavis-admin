@@ -1,0 +1,66 @@
+body {
+  font-family: "Sofia Pro Regular" !important;
+}
+
+.app-body {
+    height: 100%;
+    background-image: url(/assets/img/icons/bck.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+table {
+    width: 100%;
+}
+
+i.fa {
+    font-size: 14px;
+    color: #26ADE7;
+}
+
+.submit-button-group {
+    display: flex;
+    justify-content: space-around;
+    button {
+        width: 45%;
+    }
+}
+
+.actions {
+    color: #345;
+    mat-icon {
+        margin-right: 5px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+}
+
+.filter {
+    mat-form-field {
+        margin-right: 10px;
+        max-width: 150px
+    }
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.pr-0 {
+    padding-right: 0;
+}
+
+.pr-3 {
+    padding-left: 1.5rem !important;
+}
+
+.m-0 {
+    margin: 0
+}
+
+// @import "../node_modules/@coreui/coreui/scss/coreui";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css"

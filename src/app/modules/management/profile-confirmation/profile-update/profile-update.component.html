@@ -1,0 +1,138 @@
+<div class="person p-4">
+  <h3>Şəxsiyyət vəsiqəsi detalları</h3>
+  <div class="person-details" [formGroup]="profileFilterForm">
+    <div class="card p-3 person-table">
+      <div class="d-block d-md-none">
+        <table>
+          <tr>
+            <th>Ad</th>
+            <td>{{ data?.name }}</td>
+          </tr>
+          <tr>
+            <th>Soyad</th>
+            <td>{{ data?.surname }}</td>
+          </tr>
+          <tr>
+            <th>Ata adı</th>
+            <td>{{ data?.middleName }}</td>
+          </tr>
+          <tr>
+            <th>Doğum tarixi</th>
+            <td>{{ data?.birthDate | date: "YYYY-MM-dd" }}</td>
+          </tr>
+          <tr>
+            <th>PİN</th>
+            <td>{{ data?.pin }}</td>
+          </tr>
+          <tr>
+            <th>Ölkə</th>
+            <td>{{ data?.country?.name }}</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>{{ data?.email }}</td>
+          </tr>
+          <tr>
+            <th>Phone</th>
+            <td>{{ data?.phone }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="d-none d-md-block">
+        <table>
+          <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Ata adı</th>
+            <th>Doğum tarixi</th>
+            <th>PİN</th>
+            <th>Ölkə</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+          <tr>
+            <td>{{ data?.name }}</td>
+            <td>{{ data?.surname }}</td>
+            <td>{{ data?.middleName }}</td>
+            <td>{{ data?.birthDate | date: "YYYY-MM-dd" }}</td>
+            <td>{{ data?.pin }}</td>
+            <td>{{ data?.country?.name }}</td>
+            <td>{{ data?.email }}</td>
+            <td>{{ data?.phone }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="confirmation card">
+      <h2 class="text-bold">İstifadəçinin şəkli</h2>
+      <div class="img">
+        <img [src]="data?.avatar?.url" alt="" />
+      </div>
+      <div class="confirmation-buttons">
+        <button mat-raised-button color="primary">Təsdiq et</button>
+        <button mat-raised-button color="warn">Ləğv et</button>
+      </div>
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <mat-form-field class="w-50" appearance="outline">
+          <mat-label>Profil şəkli üçün qeyd</mat-label>
+          <textarea
+            type="text"
+            formControlName
+            matInput
+            autocomplete="description"
+            placeholder="Profil şəkli üçün qeyd"
+          ></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="ms-3">Göndər</button>
+      </div>
+    </div>
+
+    <div class="confirmation card" *ngIf="data?.idCard">
+      <h2 class="text-bold">İstifadəçinin şəxsiyyət vəsiqəsi</h2>
+      <div class="img">
+        <img [src]="data?.avatar?.url" alt="" />
+        <img [src]="data?.avatar?.url" alt="" />
+      </div>
+      <div class="confirmation-buttons">
+        <button mat-raised-button color="primary">Təsdiq et</button>
+        <button mat-raised-button color="warn">Ləğv et</button>
+      </div>
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <mat-form-field class="w-50" appearance="outline">
+          <mat-label>İstifadəçinin şəxsiyyət vəsiqəsi üçün qeyd</mat-label>
+          <textarea
+            type="text"
+            matInput
+            autocomplete="description"
+            placeholder="İstifadəçinin şəxsiyyət vəsiqəsi üçün qeyd"
+          ></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="ms-3">Göndər</button>
+      </div>
+    </div>
+
+    <div class="confirmation card" *ngIf="data?.driverLicense">
+      <h2 class="text-bold">İstifadəçinin sürücülük vəsiqəsi</h2>
+      <div class="img">
+        <img [src]="data?.avatar?.url" alt="" />
+        <img [src]="data?.avatar?.url" alt="" />
+      </div>
+      <div class="confirmation-buttons">
+        <button mat-raised-button color="primary">Təsdiq et</button>
+        <button mat-raised-button color="warn">Ləğv et</button>
+      </div>
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <mat-form-field class="w-50" appearance="outline">
+          <mat-label>İstifadəçinin sürücülük vəsiqəsi üçün qeyd</mat-label>
+          <textarea
+            type="text"
+            matInput
+            autocomplete="description"
+            placeholder="İstifadəçinin sürücülük vəsiqəsi üçün qeyd"
+          ></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="ms-3">Göndər</button>
+      </div>
+    </div>
+  </div>
+</div>

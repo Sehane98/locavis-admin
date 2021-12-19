@@ -1,0 +1,69 @@
+.login-container {
+  height: 100vh;
+  .col-12 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .login-form {
+      max-width: 412px;
+      position: relative;
+      .login-text {
+        font-size: 17px;
+        color: #fff;
+        p {
+          text-align: center;
+        }
+        // padding-left: 10%;
+        // padding-right: 10%;
+      }
+      .login-title {
+        text-align: center;
+        font-size: 32px;
+        font-style: bold;
+        color: #fff;
+      }
+      .logo {
+        background-color: #fff;
+        border-radius: 50%;
+        position: absolute;
+        left: 37%;
+        padding: 20px;
+        img {
+          width: 70px;
+        }
+      }
+      .card-body {
+        margin-top: 66px;
+        border-radius: 10px;
+        form {
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+.radio_button {
+  mat-radio-button {
+    margin-right: 50px;
+  }
+}
+
+.submit {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  button {
+    width: 95px;
+    color: #fff;
+  }
+}
+
+@media (min-width: 992px) {
+  .login-container {
+    // min-width: 918px !important;
+  }
+}
