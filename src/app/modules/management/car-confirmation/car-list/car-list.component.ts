@@ -22,9 +22,9 @@ export interface PeriodicElement {
 }
 
 @Component({
-  selector: 'app-profile-list',
-  templateUrl: './profile-list.component.html',
-  styleUrls: ['./profile-list.component.scss'],
+  selector: 'app-car-list',
+  templateUrl: './car-list.component.html',
+  styleUrls: ['./car-list.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -35,15 +35,15 @@ export interface PeriodicElement {
 })
 
 
-export class ProfileListComponent implements OnInit {
-  columnsToDisplay = ['id', 'name', 'surname', 'middleName',  'pin', 'birthDate', 'status' ];
+export class CarListComponent implements OnInit {
+  columnsToDisplay = ['id', 'name', 'brand', 'manufactureYear', 'model', 'registrationNumber', 'status', '#'];
   expandedElement: PeriodicElement | null | undefined;
 
   statusList = ['URGENT', 'HIGH', 'NORMAL', 'LOW'];
   dataSource = [];
   customerList: any;
 
-  profileFilterForm!: FormGroup;
+  carFilterForm!: FormGroup;
   tableLoading: boolean = false;
   currentUser = this.authService.getCurrentUser();
 
@@ -56,27 +56,28 @@ export class ProfileListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initProfileFilterForm();
-    this.getAllProfiles();
+    this.initCarFilterForm();
+    this.getAllCars();
 
   }
 
-  getAllProfiles(): void {
-    const params = { ...this.profileFilterForm.value };
+  getAllCars(): void {
+    const params = { ...this.carFilterForm.value };
 
     this.tableLoading = true;
 
-    this.coreService.get(HttpConf.URL.getProfiles, params)
+    this.coreService.get(HttpConf.URL.getCars, params)
       .subscribe(res => {
-        console.log(res);
-        this.dataSource = res.body?.result?.persons;
+        this.dataSource = res.body?.result?.cars;
+        console.log(this.dataSource[0] );
+
       }, (err: HttpErrorResponse) => {
         this.snackBarService.error(err);
       }).add(() => this.tableLoading = false);
   }
 
-  initProfileFilterForm(): void {
-    this.profileFilterForm = this.formBuilder.group({
+  initCarFilterForm(): void {
+    this.carFilterForm = this.formBuilder.group({
       count: [0],
       PageNumber: 1,
       OnlyNotConsidered: [true],
@@ -87,18 +88,39 @@ export class ProfileListComponent implements OnInit {
 
 
   subscribeFilterForm(): void {
-    this.profileFilterForm.valueChanges
+    this.carFilterForm.valueChanges
       .pipe(
         debounceTime(1000),
         distinctUntilChanged()
       )
       .subscribe(() => {
-        this.getAllProfiles();
+        this.getAllCars();
       });
   }
 
-  statusColor(element, group, id) { console.log(element)
-    let data = this.parseCodeToId(element[group]?.code);
+  openDeleteConfirmDialog(row) {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      width: '350px',
+      height: 'auto',
+      data: {
+        id: row.id,
+        message: 'Are you sure?',
+        delete: (id: number) => this.coreService.delete(HttpConf.URL.getCars + '/' + row.id, row.id)
+      }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        filter(v => !!v)
+      )
+      .subscribe(() => {
+        this.snackBarService.success('Successfully deleted!');
+        this.getAllCars();
+      });
+  }
+
+  statusColor(element, group, id) {
+    let data = this.parseCodeToId(element[group].code);
 
     return data === id;
   }
@@ -118,27 +140,6 @@ export class ProfileListComponent implements OnInit {
 
     }
     return id;
-  }
-
-  openDeleteConfirmDialog(row) {
-    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
-      width: '350px',
-      height: 'auto',
-      data: {
-        id: row.id,
-        message: 'Are you sure?',
-        delete: (id: number) => this.coreService.delete(HttpConf.URL.getProfiles + '/' + row.id, row.id)
-      }
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        filter(v => !!v)
-      )
-      .subscribe(() => {
-        this.snackBarService.success('Successfully deleted!');
-        this.getAllProfiles();
-      });
   }
 
 }

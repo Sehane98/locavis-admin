@@ -1,0 +1,180 @@
+<div class="person p-4">
+  <h3>Avtomobilin detalları</h3>
+  <div class="person-details" [formGroup]="carFilterForm">
+    <div class="card p-3">
+      <div class="row">
+        <div class="col-md-6">
+          <table>
+            <tr>
+              <th>Sahibi</th>
+              <td>{{ data?.mainInfo?.ownerName }}</td>
+            </tr>
+            <tr>
+              <th>Marka</th>
+              <td>{{ data?.mainInfo?.carBrand?.name }}</td>
+            </tr>
+            <tr>
+              <th>Model</th>
+              <td>{{ data?.mainInfo?.carModel?.name }}</td>
+            </tr>
+            <tr>
+              <th>Növ</th>
+              <td>{{ data?.mainInfo?.carBodyType?.name }}</td>
+            </tr>
+            <tr>
+              <th>Rəng</th>
+              <td>{{ data?.mainInfo?.color }}</td>
+            </tr>
+            <tr>
+              <th>Mühərrik tutumu</th>
+              <td>{{ data?.mainInfo?.engineCapacity }}</td>
+            </tr>
+            <tr>
+              <th>İstehsal ili</th>
+              <td>{{ data?.mainInfo?.manufactureYear }}</td>
+            </tr>
+            <tr>
+              <th>Qeydiyyat nömrəsi</th>
+              <td>{{ data?.mainInfo?.registrationNumber }}</td>
+            </tr>
+            <tr>
+              <th>VİN</th>
+              <td>{{ data?.mainInfo?.vin }}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table>
+            <tr>
+              <th>Qapı sayı</th>
+              <td>{{ data?.additionalInfo?.carDoorCount?.name }}</td>
+            </tr>
+            <tr>
+              <th>Mühərrik Tipi</th>
+              <td>{{ data?.additionalInfo?.carEngineType?.name }}</td>
+            </tr>
+            <tr>
+              <th>Oturacaq sayı</th>
+              <td>{{ data?.additionalInfo?.carSeatCount?.name }}</td>
+            </tr>
+            <tr>
+              <th>Transmissiya növü</th>
+              <td>{{ data?.additionalInfo?.carTransmissionType?.name }}</td>
+            </tr>
+            <tr>
+              <th>Kasko Sığortası</th>
+              <td>
+                {{ data?.additionalInfo?.hasCascoInsurance ? "Var" : "Yoxdu" }}
+              </td>
+            </tr>
+            <tr>
+              <th>İstifadə olunacaq aralıq</th>
+              <td>{{ data?.additionalInfo?.useRange?.name }}</td>
+            </tr>
+            <tr>
+              <th>Üstünlükləri</th>
+              <td>
+                <span *ngFor="let item of data?.carAdvantageTypeList">
+                  {{ item }}
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="confirmation card" formGroupName="mainInfoConfirmation">
+      <h2 class="text-bold">Texniki pasport</h2>
+      <div class="img">
+        <img [src]="data?.mainInfo?.technicalPassport?.backSide?.url" alt="" />
+        <img [src]="data?.mainInfo?.technicalPassport?.frontSide?.url" alt="" />
+      </div>
+      <div class="confirmation-buttons">
+        <button
+          mat-raised-button
+          class="await-button"
+          [ngClass]="{ 'success-button': isSuccess('mainInfoConfirmation', 3) }"
+          (click)="rejectOrConfirmData('mainInfoConfirmation', 3)"
+        >
+          Təsdiq et
+        </button>
+        <button
+          mat-raised-button
+          class="await-button"
+          [ngClass]="{ 'reject-button': isSuccess('mainInfoConfirmation', 2) }"
+          (click)="rejectOrConfirmData('mainInfoConfirmation', 2)"
+        >
+          Ləğv et
+        </button>
+      </div>
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <mat-form-field class="w-50" appearance="outline">
+          <mat-label>Əsas məlumatlar üçün qeyd</mat-label>
+          <textarea
+            type="text"
+            formControlName="description"
+            matInput
+            autocomplete="description"
+            placeholder="Əsas məlumatlar üçün qeyd"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="confirmation card">
+      <h2 class="text-bold">Maşın şəkilləri</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Rəng seçin</mat-label>
+        <mat-select formControlName="colorId">
+          <mat-option *ngFor="let item of colorList" [value]="item.id">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="img">
+        <img [src]="img?.url" alt="" *ngFor="let img of data?.images" />
+      </div>
+      <div class="confirmation-buttons">
+        <button
+          mat-raised-button
+          class="await-button"
+          [ngClass]="{ 'success-button': isSuccess('imagesConfirmation', 3) }"
+          (click)="rejectOrConfirmData('imagesConfirmation', 3)"
+        >
+          Təsdiq et
+        </button>
+        <button
+          mat-raised-button
+          class="await-button"
+          [ngClass]="{ 'reject-button': isSuccess('imagesConfirmation', 2) }"
+          (click)="rejectOrConfirmData('imagesConfirmation', 2)"
+        >
+          Ləğv et
+        </button>
+      </div>
+      <div
+        class="d-flex align-items-center justify-content-center w-100"
+        formGroupName="imagesConfirmation"
+      >
+        <mat-form-field class="w-50" appearance="outline">
+          <mat-label>Şəkillər üçün qeyd</mat-label>
+          <textarea
+            type="text"
+            formControlName="description"
+            matInput
+            autocomplete="description"
+            placeholder="Şəkillər üçün qeyd"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirmation card">
+    <div class="confirmation-buttons">
+      <button [disabled]="carFilterForm.invalid" mat-raised-button class="save" (click)="saveDataDialog()">
+        Yadda saxla
+      </button>
+    </div>
+  </div>
+</div>

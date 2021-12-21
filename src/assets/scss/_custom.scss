@@ -33,9 +33,15 @@ table {
     width: 100%;
 }
 
+.table-loading {
+  mat-spinner {
+    margin: auto
+  }
+}
+
 i.fa {
     font-size: 14px;
-    color: #26ADE7;
+    color: $main-blue-color;
 }
 
 .submit-button-group {

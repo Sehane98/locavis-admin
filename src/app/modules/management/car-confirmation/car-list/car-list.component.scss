@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+  height: calc(100vh - 98px);
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.car-img {
+    display: flex;
+}
+
+.passport, .car {
+  margin-right: 20px;
+  width: 280px;
+  margin: 8px 10px;
+  height: 204px;
+  img {
+      width: 100%;
+  }
+}
+

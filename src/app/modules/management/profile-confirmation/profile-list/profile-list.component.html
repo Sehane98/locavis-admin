@@ -1,56 +1,136 @@
 <div [formGroup]="profileFilterForm">
-    <div class="filter p-4">
-
-        <mat-form-field  appearance="outline">
-            <mat-label>Profillər</mat-label>
-            <mat-select formControlName="OnlyNotConsidered">
-              <mat-option [value]="true">
-                Təsdiqlənən
-              </mat-option>
-              <mat-option [value]="false">
-                Təsdiqlənməyən
-              </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+  <div class="filter p-4">
+    <mat-form-field appearance="outline">
+      <mat-label>Profillər</mat-label>
+      <mat-select formControlName="OnlyNotConsidered">
+        <mat-option [value]="true"> Təsdiqlənən </mat-option>
+        <mat-option [value]="false"> Təsdiqlənməyən </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 
 <div>
-  <table mat-table
-        [dataSource]="dataSource" multiTemplateDataRows
-        class="mat-elevation-z8">
-    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-    </ng-container>
-
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-    <ng-container matColumnDef="expandedDetail">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-        <div class="example-element-detail"
-            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <div class="actions d-flex align-items-center">
-            <mat-icon [routerLink]="element.id">edit</mat-icon>
+  <ng-container *ngIf="dataSource.length; else loading">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      multiTemplateDataRows
+      class="mat-elevation-z8"
+    >
+      <ng-container
+        matColumnDef="{{ column }}"
+        *ngFor="let column of columnsToDisplay"
+      >
+        <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="column !== 'status'">{{ element[column] }}</span>
+          <div *ngIf="column === 'status'">
+            <button *ngIf="element?.avatarConfirmationStatus"
+              mat-raised-button
+              class="await-button ms-2 mb-2"
+              [ngClass]="{
+                'success-button': statusColor(
+                  element,
+                  'avatarConfirmationStatus',
+                  3
+                ),
+                'reject-button': statusColor(
+                  element,
+                  'avatarConfirmationStatus',
+                  2
+                )
+              }"
+            >
+              Profil
+            </button>
+            <button *ngIf="element?.idCardConfirmationStatus"
+              mat-raised-button
+              class="await-button ms-2 mb-2 "
+              [ngClass]="{
+                'success-button': statusColor(
+                  element,
+                  'idCardConfirmationStatus',
+                  3
+                ),
+                'reject-button': statusColor(
+                  element,
+                  'idCardConfirmationStatus',
+                  2
+                )
+              }"
+            >
+              Şəxsiyyət vəsiqəsi
+            </button>
+            <button *ngIf="element?.driverLicenseConfirmationStatus"
+              mat-raised-button
+              class="await-button ms-2 mb-2"
+              [ngClass]="{
+                'success-button': statusColor(
+                  element,
+                  'driverLicenseConfirmationStatus',
+                  3
+                ),
+                'reject-button': statusColor(
+                  element,
+                  'driverLicenseConfirmationStatus',
+                  2
+                )
+              }"
+            >
+              Sürücülük vəsiqəsi
+            </button>
           </div>
-          <div class="profile-img">
-            <div class="profile">            
-              <img src="/assets/img/icons/default/passport.jpg">
+        </td>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [attr.colspan]="columnsToDisplay.length"
+        >
+          <div
+            class="example-element-detail"
+            [@detailExpand]="
+              element == expandedElement ? 'expanded' : 'collapsed'
+            "
+          >
+            <div class="actions d-flex align-items-center">
+              <mat-icon [routerLink]="element.id">edit</mat-icon>
             </div>
-            <div class="passport">            
-              <img src="/assets/img/icons/default/passport.jpg">
+            <div class="profile-img">
+              <div class="profile">
+                <img src="/assets/img/icons/default/passport.jpg" />
+              </div>
+              <div class="passport">
+                <img src="/assets/img/icons/default/passport.jpg" />
+              </div>
             </div>
           </div>
-        </div>
-      </td>
-    </ng-container>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr
+        mat-row
+        *matRowDef="let element; columns: columnsToDisplay"
         class="example-element-row"
         [class.example-expanded-row]="expandedElement === element"
-        (click)="expandedElement = expandedElement === element ? null : element">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-  </table>
+        (click)="expandedElement = expandedElement === element ? null : element"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['expandedDetail']"
+        class="example-detail-row"
+      ></tr>
+    </table>
+  </ng-container>
 
+  <ng-template #loading>
+    <div class="table-loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
 </div>

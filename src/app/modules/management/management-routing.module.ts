@@ -16,6 +16,13 @@ const routes: Routes = [
     }
   },
   {
+    path: 'car',
+    loadChildren: () => import('./car-confirmation/car-confirmation.module').then(m => m.CarConfirmationModule),
+    data: {
+      title: 'Car'
+    }
+  },
+  {
     path: 'task',
     loadChildren: () => import('./task/task.module').then(m => m.TaskModule),
     data: {
