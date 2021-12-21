@@ -7,6 +7,10 @@ mat-toolbar {
   width: 50px;
 }
 
+.title {
+  letter-spacing: 3px;
+}
+
 mat-sidenav {
   margin: 16px;
   width: 200px;
@@ -49,11 +53,11 @@ mat-sidenav-container {
 
 .profile_img {
   margin: auto;
-  width: 82px;
-  height: 82px;
+  // width: 82px;
+  // height: 82px;
   img {
-    width: 100%;
-    border-radius: 50%;
+    // width: 100%;
+    // border-radius: 50%;
   }
 }
 

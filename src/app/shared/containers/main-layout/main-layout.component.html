@@ -2,7 +2,8 @@
   <button mat-icon-button class="example-icon" *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <img class="logo" src="/assets/img/icons/logo-white.png">
+  <!-- <img class="logo" src="/assets/img/icons/logo-white.png"> -->
+  <h1 class="title">LOCAVIS</h1>
   <span class="example-spacer"></span>
   <span *ngIf="currentUser?.role === 'ROLE_ADMIN'">{{ currentUser?.organizationName }}</span>
   <button mat-icon-button class="example-icon pr-3" (click)="logout()">
@@ -14,7 +15,7 @@
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
 
       <div class="profile_img">
-        <img src="/assets/img/icons/default/profile.png">
+        <img src="/assets/img/icons/logo-white.png">
       </div>
 
       <h4 class="name">Ad Soyad{{ currentUser?.username }}</h4>
