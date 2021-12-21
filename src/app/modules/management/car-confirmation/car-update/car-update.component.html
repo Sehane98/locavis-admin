@@ -84,7 +84,7 @@
       </div>
     </div>
     <div class="confirmation card" formGroupName="mainInfoConfirmation">
-      <h2 class="text-bold">Texniki pasport</h2>
+      <h2 class="text-bold">Qeydiyyat şəhadətnaməsi</h2>
       <div class="img">
         <img [src]="data?.mainInfo?.technicalPassport?.backSide?.url" alt="" />
         <img [src]="data?.mainInfo?.technicalPassport?.frontSide?.url" alt="" />
@@ -104,7 +104,7 @@
           [ngClass]="{ 'reject-button': isSuccess('mainInfoConfirmation', 2) }"
           (click)="rejectOrConfirmData('mainInfoConfirmation', 2)"
         >
-          Ləğv et
+          İmtina et
         </button>
       </div>
       <div class="d-flex align-items-center justify-content-center w-100">
@@ -122,9 +122,9 @@
     </div>
 
     <div class="confirmation card">
-      <h2 class="text-bold">Maşın şəkilləri</h2>
+      <h2 class="text-bold">Avtomobilin şəkilləri</h2>
       <mat-form-field appearance="outline">
-        <mat-label>Rəng seçin</mat-label>
+        <mat-label>Avtomobilin rəngini</mat-label>
         <mat-select formControlName="colorId">
           <mat-option *ngFor="let item of colorList" [value]="item.id">
             {{ item.name }}
@@ -149,7 +149,7 @@
           [ngClass]="{ 'reject-button': isSuccess('imagesConfirmation', 2) }"
           (click)="rejectOrConfirmData('imagesConfirmation', 2)"
         >
-          Ləğv et
+          İmtina et
         </button>
       </div>
       <div

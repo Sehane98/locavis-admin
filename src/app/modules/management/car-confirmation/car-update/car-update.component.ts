@@ -119,7 +119,7 @@ export class CarUpdateComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDataComponent, {
       width: '350px',
       data: {
-        message: 'Təsdiqləmək istədiyinizə əminsiz?',
+        message: 'Məlumatların doğruluğuna əminsiniz?',
         text: 'Yadda saxla',
         confirm: (id: number) =>
           this.coreService.post(HttpConf.URL.editCar, params),

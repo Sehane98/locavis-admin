@@ -36,7 +36,7 @@ export interface PeriodicElement {
 
 
 export class ProfileListComponent implements OnInit {
-  columnsToDisplay = ['id', 'name', 'surname', 'middleName',  'pin', 'birthDate', 'status' ];
+  columnsToDisplay = ['id', 'name', 'surname', 'middleName', 'phone', 'pin', 'birthDate', 'status' ];
   expandedElement: PeriodicElement | null | undefined;
 
   statusList = ['URGENT', 'HIGH', 'NORMAL', 'LOW'];
