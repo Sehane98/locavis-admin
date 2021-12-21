@@ -18,27 +18,23 @@ import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
-  declarations: [
-    TaskListComponent,
-    TaskUpdateComponent
-  ],
-  imports: [
-    CommonModule,
-    TaskRoutingModule,
-    DragDropModule,
-    MatTableModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatIconModule
-  ],
-  entryComponents: [
-    TaskUpdateComponent,
-    ConfirmDeleteComponent
-  ]
+    declarations: [
+        TaskListComponent,
+        TaskUpdateComponent
+    ],
+    imports: [
+        CommonModule,
+        TaskRoutingModule,
+        DragDropModule,
+        MatTableModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatInputModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatIconModule
+    ]
 })
 export class TaskModule { }

@@ -14,12 +14,14 @@ import {ConfirmDeleteComponent} from './components/confirm-delete/confirm-delete
 import { MatDialogModule } from "@angular/material/dialog";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "../core/interceptors/auth.interceptor";
+import { ConfirmDataComponent } from './components/confirm-data/confirm-data.component';
 
 @NgModule({
   declarations: [
     MainLayoutComponent,
     AuthLayoutComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    ConfirmDataComponent
   ],
   imports: [
     CommonModule,

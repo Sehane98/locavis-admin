@@ -2,7 +2,7 @@
   <h3>Şəxsiyyət vəsiqəsi detalları</h3>
   <div class="person-details" [formGroup]="profileFilterForm">
     <div class="card p-3 person-table">
-      <div class="d-block d-md-none">
+      <div class="d-block d-lg-none">
         <table>
           <tr>
             <th>Ad</th>
@@ -36,9 +36,17 @@
             <th>Phone</th>
             <td>{{ data?.phone }}</td>
           </tr>
+          <tr *ngIf="data?.driverLicense">
+            <th>Nömrə</th>
+            <td>{{ data?.driverLicense?.number }}</td>
+          </tr>
+          <tr *ngIf="data?.driverLicense">
+            <th>Son tarix</th>
+            <td>{{ data?.driverLicense?.validityDate | date: "YYYY-MM-dd"}}</td>
+          </tr>
         </table>
       </div>
-      <div class="d-none d-md-block">
+      <div class="d-none d-lg-block">
         <table>
           <tr>
             <th>Ad</th>
@@ -63,76 +71,81 @@
         </table>
       </div>
     </div>
-    <div class="confirmation card">
+    <div class="confirmation card" formGroupName="avatarConfirmation">
       <h2 class="text-bold">İstifadəçinin şəkli</h2>
       <div class="img">
         <img [src]="data?.avatar?.url" alt="" />
       </div>
       <div class="confirmation-buttons">
-        <button mat-raised-button color="primary">Təsdiq et</button>
-        <button mat-raised-button color="warn">Ləğv et</button>
+        <button mat-raised-button class="await-button" [ngClass]="{'success-button' : isSuccess('avatarConfirmation', 3)}" (click)="rejectOrConfirmData('avatarConfirmation', 3)">Təsdiq et</button>
+        <button mat-raised-button class="await-button" [ngClass]="{'reject-button' : isSuccess('avatarConfirmation', 2)}" (click)="rejectOrConfirmData('avatarConfirmation', 2)">Ləğv et</button>
       </div>
       <div class="d-flex align-items-center justify-content-center w-100">
         <mat-form-field class="w-50" appearance="outline">
           <mat-label>Profil şəkli üçün qeyd</mat-label>
           <textarea
             type="text"
-            formControlName
+            formControlName="description"
             matInput
             autocomplete="description"
             placeholder="Profil şəkli üçün qeyd"
           ></textarea>
         </mat-form-field>
-        <button mat-raised-button color="primary" class="ms-3">Göndər</button>
       </div>
     </div>
 
-    <div class="confirmation card" *ngIf="data?.idCard">
+    <div class="confirmation card" formGroupName="idCardConfirmation" *ngIf="data?.idCard">
       <h2 class="text-bold">İstifadəçinin şəxsiyyət vəsiqəsi</h2>
       <div class="img">
-        <img [src]="data?.avatar?.url" alt="" />
-        <img [src]="data?.avatar?.url" alt="" />
+        <img [src]="data?.idCard?.backSide?.url" alt="" />
+        <img [src]="data?.idCard?.frontSide?.url" alt="" />
       </div>
       <div class="confirmation-buttons">
-        <button mat-raised-button color="primary">Təsdiq et</button>
-        <button mat-raised-button color="warn">Ləğv et</button>
+        <button mat-raised-button class="await-button" [ngClass]="{'success-button' : isSuccess('idCardConfirmation', 3)}" (click)="rejectOrConfirmData('idCardConfirmation', 3)">Təsdiq et</button>
+        <button mat-raised-button class="await-button" [ngClass]="{'reject-button' : isSuccess('idCardConfirmation', 2)}" (click)="rejectOrConfirmData('idCardConfirmation', 2)">Ləğv et</button>
       </div>
       <div class="d-flex align-items-center justify-content-center w-100">
         <mat-form-field class="w-50" appearance="outline">
           <mat-label>İstifadəçinin şəxsiyyət vəsiqəsi üçün qeyd</mat-label>
           <textarea
             type="text"
+            formControlName="description"
             matInput
             autocomplete="description"
             placeholder="İstifadəçinin şəxsiyyət vəsiqəsi üçün qeyd"
           ></textarea>
         </mat-form-field>
-        <button mat-raised-button color="primary" class="ms-3">Göndər</button>
       </div>
     </div>
 
-    <div class="confirmation card" *ngIf="data?.driverLicense">
+    <div class="confirmation card" formGroupName="driverLicenseConfirmation" *ngIf="data?.driverLicense">
       <h2 class="text-bold">İstifadəçinin sürücülük vəsiqəsi</h2>
       <div class="img">
-        <img [src]="data?.avatar?.url" alt="" />
-        <img [src]="data?.avatar?.url" alt="" />
+        <img [src]="data?.driverLicense?.document?.backSide?.url" alt="" />
+        <img [src]="data?.driverLicense?.document?.frontSide?.url" alt="" />
       </div>
       <div class="confirmation-buttons">
-        <button mat-raised-button color="primary">Təsdiq et</button>
-        <button mat-raised-button color="warn">Ləğv et</button>
+        <button mat-raised-button class="await-button" [ngClass]="{'success-button' : isSuccess('driverLicenseConfirmation', 3)}" (click)="rejectOrConfirmData('driverLicenseConfirmation', 3)">Təsdiq et</button>
+        <button mat-raised-button class="await-button" [ngClass]="{'reject-button' : isSuccess('driverLicenseConfirmation', 2)}" (click)="rejectOrConfirmData('driverLicenseConfirmation', 2)">Ləğv et</button>
       </div>
       <div class="d-flex align-items-center justify-content-center w-100">
         <mat-form-field class="w-50" appearance="outline">
           <mat-label>İstifadəçinin sürücülük vəsiqəsi üçün qeyd</mat-label>
           <textarea
             type="text"
+            formControlName="description"
             matInput
             autocomplete="description"
             placeholder="İstifadəçinin sürücülük vəsiqəsi üçün qeyd"
           ></textarea>
         </mat-form-field>
-        <button mat-raised-button color="primary" class="ms-3">Göndər</button>
       </div>
     </div>
+
   </div>
+
+  <div class="confirmation card">
+    <div class="confirmation-buttons">
+      <button mat-raised-button class="save" (click)="saveDataDialog()">Yadda saxla</button>
+    </div>
 </div>

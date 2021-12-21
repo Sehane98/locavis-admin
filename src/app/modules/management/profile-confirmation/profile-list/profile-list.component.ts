@@ -66,7 +66,7 @@ export class ProfileListComponent implements OnInit {
 
     this.tableLoading = true;
 
-    this.coreService.get(HttpConf.URL.profiles, params)
+    this.coreService.get(HttpConf.URL.getProfiles, params)
       .subscribe(res => {
         console.log(res);
         this.dataSource = res.body?.result?.persons;
@@ -104,7 +104,7 @@ export class ProfileListComponent implements OnInit {
       data: {
         id: row.id,
         message: 'Are you sure?',
-        delete: (id: number) => this.coreService.delete(HttpConf.URL.profiles + '/' + row.id, row.id)
+        delete: (id: number) => this.coreService.delete(HttpConf.URL.getProfiles + '/' + row.id, row.id)
       }
     });
 

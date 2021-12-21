@@ -9,6 +9,26 @@ body {
     background-size: cover;
 }
 
+.await-button {
+    background-color: $main-yellow-color;
+    color: #fff;
+}
+
+.reject-button {
+    background-color: $main-red-color;
+    color: #fff;
+}
+
+.success-button {
+    background-color: $main-green-color;
+    color: #fff;
+}
+
+.save {
+    background-color: $main-blue-color;
+    color: #fff; 
+}
+
 table {
     width: 100%;
 }

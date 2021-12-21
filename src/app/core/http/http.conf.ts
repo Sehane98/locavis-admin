@@ -11,8 +11,9 @@ export class HttpConf {
     // auth: `${HttpConf.REST_API}:7092/api/authenticate`,
     // "az/Confirmation/GetProfiles"
 
-    profiles: `${HttpConf.CONFIRMATION}/GetProfiles`,
-    profile: `${HttpConf.CONFIRMATION}/GetProfile`,
+    getProfiles: `${HttpConf.CONFIRMATION}/GetProfiles`,
+    getProfile: `${HttpConf.CONFIRMATION}/GetProfile`,
+    editProfile: `${HttpConf.CONFIRMATION}/EditProfile`,
 
 
     login_customer: `${HttpConf.REST_API}/login-customer`,

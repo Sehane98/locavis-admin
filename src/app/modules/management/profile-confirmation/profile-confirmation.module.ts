@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { ProfileConfirmationModuleRoutingModule } from './profile-confirmation-routing.module';
+import { ConfirmDataComponent } from 'src/app/shared/components/confirm-data/confirm-data.component';
 
 
 
@@ -35,5 +36,8 @@ import { ProfileConfirmationModuleRoutingModule } from './profile-confirmation-r
     ReactiveFormsModule,
     MatIconModule,
   ],
+  entryComponents: [
+    ConfirmDataComponent
+  ]
 })
 export class ProfileConfirmationModule { }
