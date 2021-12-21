@@ -125,7 +125,7 @@ export class ProfileUpdateComponent implements OnInit {
         confirm: (id: number) =>
           this.coreService.post(HttpConf.URL.editProfile, params),
       },
-    });
+    }); 
 
     dialogRef
       .afterClosed()
