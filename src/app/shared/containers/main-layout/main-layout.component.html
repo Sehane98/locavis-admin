@@ -1,0 +1,40 @@
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!-- <img class="logo" src="/assets/img/icons/logo-white.png"> -->
+  <h1 class="title">LOCAVIS</h1>
+  <span class="example-spacer"></span>
+  <span *ngIf="currentUser?.role === 'ROLE_ADMIN'">{{ currentUser?.organizationName }}</span>
+  <button mat-icon-button class="example-icon pr-3" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+
+      <div class="profile_img">
+        <img src="/assets/img/icons/logo-white.png">
+      </div>
+
+      <h4 class="name">Ad Soyad{{ currentUser?.username }}</h4>
+      <p class="email"> Email {{ currentUser?.email }}</p>
+
+      <mat-divider></mat-divider>
+      <button mat-button class="menu-button" routerLinkActive="active" [routerLink]="'profile'">
+          <mat-icon>person</mat-icon>
+          <span>İstifadəçilər</span>
+      </button>
+      <button mat-button class="menu-button" routerLinkActive="active" [routerLink]="'car'">
+        <mat-icon>time_to_leave</mat-icon>
+        <span>Avtomobillər</span>
+      </button>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <div class="content mat-elevation-z8">
+        <router-outlet></router-outlet>
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,82 @@
+@font-face {
+  font-family: "Sofia Pro Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Sofia Pro"),
+    url("https://fonts.cdnfonts.com/s/14903/Sofia Pro Regular Az.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "Sofia Pro Black";
+  src: local("Sofia Pro"),
+    url("https://fonts.cdnfonts.com/s/14903/Sofia Pro Black Az.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "Sofia Pro Semi Bold";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Sofia Pro"),
+    url("https://fonts.cdnfonts.com/s/14903/Sofia Pro Semi Bold Az.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "Sofia Pro Bold";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Sofia Pro"),
+    url("https://fonts.cdnfonts.com/s/14903/Sofia Pro Bold Az.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "Sofia Pro Light";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Sofia Pro"),
+    url("https://fonts.cdnfonts.com/s/14903/Sofia Pro Light Az.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "Sofia Pro Extra Light";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Sofia Pro"),
+    url("https://fonts.cdnfonts.com/s/14903/Sofia Pro ExtraLight Az.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "Sofia Pro Medium";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Sofia Pro"),
+    url("https://fonts.cdnfonts.com/s/14903/Sofia Pro Medium Az.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  src: local("☺︎"),
+    url("http://www.apple.com/wss/fonts/SF-Pro-Display/v1/sf-pro-display_ultralight.woff")
+      format("woff"),
+    url("http://www.apple.com/wss/fonts/SF-Pro-Display/v1/sf-pro-display_ultralight.ttf")
+      format("truetype");
+}
+
+// @font-face {
+//   font-family: 'SF Pro Display Heavy';
+//   src: url('../../font/SFProDisplay-Heavy.eot');
+//   src: local('SF Pro Display Heavy'), local('SFProDisplay-Heavy'),
+//       url('../../font/SFProDisplay-Heavy.eot') format('embedded-opentype'),
+//       url('../../font/SFProDisplay-Heavy.woff2') format('woff2'),
+//       url('../../font/SFProDisplay-Heavy.woff') format('woff'),
+//       url('../../font/SFProDisplay-Heavy.ttf') format('truetype');
+//   font-weight: 900;
+//   font-style: normal;
+// }

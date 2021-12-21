@@ -1,0 +1,40 @@
+<div class="animated fadeIn center">
+  <div class="row login-container">
+    <div class="col-12">
+      <div class="login-form">
+        <h1 class="login-title">Giriş</h1>
+        <div class="login-text"><p>Müştərilərimiz üçün mümkün olan ən yaxşı istifadəçi təcrübəsini yaratmağa başlayın</p></div>
+        <div class="logo" >
+          <img src="/assets/img/icons/logo.png">
+        </div>        
+        <div class="card-body bg-white p-5">
+          <form [formGroup]="loginForm" (ngSubmit)="submit()">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Email or phone </mat-label>
+              <input type="text" matInput autocomplete="username" (keypress)="checkEmailOrPhone()" placeholder="Email or phone" formControlName="username">
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input type="password" matInput autocomplete="password" placeholder="Password" formControlName="password">
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            
+  
+            <div class="row">
+              <div class="col-sm-12 submit">
+                <button type="submit"
+                        mat-flat-button color="primary" 
+                        [disabled]="loginForm.invalid || loginLoading">
+                  <i class="fa fa-spinner fa-pulse fa-2x fa-fw" *ngIf="loginLoading; else btnText"></i>
+                  <ng-template #btnText>Sign in</ng-template>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
