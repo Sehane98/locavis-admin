@@ -10,13 +10,13 @@
         <div class="card-body bg-white p-5">
           <form [formGroup]="loginForm" (ngSubmit)="submit()">
             <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Email or phone </mat-label>
-              <input type="text" matInput autocomplete="username" (keypress)="checkEmailOrPhone()" placeholder="Email or phone" formControlName="username">
+              <mat-label>Email və ya telefon </mat-label>
+              <input type="text" matInput  (ngModelChange)="checkEmailOrPhone()" placeholder="Email və ya telefon" formControlName="username">
               <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
 
             <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Password</mat-label>
+              <mat-label>Şifrə</mat-label>
               <input type="password" matInput autocomplete="password" placeholder="Password" formControlName="password">
               <mat-icon matSuffix>lock</mat-icon>
             </mat-form-field>
@@ -28,7 +28,7 @@
                         mat-flat-button color="primary" 
                         [disabled]="loginForm.invalid || loginLoading">
                   <i class="fa fa-spinner fa-pulse fa-2x fa-fw" *ngIf="loginLoading; else btnText"></i>
-                  <ng-template #btnText>Sign in</ng-template>
+                  <ng-template #btnText>Daxil ol</ng-template>
                 </button>
               </div>
             </div>
