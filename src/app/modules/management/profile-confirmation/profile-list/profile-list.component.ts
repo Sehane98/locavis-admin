@@ -97,7 +97,7 @@ export class ProfileListComponent implements OnInit {
       });
   }
 
-  statusColor(element, group, id) { console.log(element)
+  statusColor(element, group, id) { 
     let data = this.parseCodeToId(element[group]?.code);
 
     return data === id;
@@ -139,6 +139,32 @@ export class ProfileListComponent implements OnInit {
         this.snackBarService.success('Successfully deleted!');
         this.getAllProfiles();
       });
+  }
+
+  changeUserActivity(element, action): void {
+    const params = { userId: element.id };
+    let url;
+
+    switch (action) {
+      case 'lock':
+        url = HttpConf.USER + '/Lock';
+        break;
+      case 'unlock':
+        url = HttpConf.USER + '/Unlock';
+        break
+      case 'suspend':
+        url = HttpConf.USER + '/Suspend';
+        break
+
+    }
+
+    this.coreService.post(url, params)
+    .subscribe(res => {
+      console.log(res);
+      this.dataSource = res.body?.result?.persons;
+    }, (err: HttpErrorResponse) => {
+      this.snackBarService.error(err);
+    }).add(() => this.tableLoading = false);
   }
 
 }

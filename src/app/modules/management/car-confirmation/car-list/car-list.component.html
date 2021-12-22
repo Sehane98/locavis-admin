@@ -63,14 +63,14 @@
         <td mat-cell *matCellDef="let element">
           <button
             mat-raised-button
-            class="await-button"
+            class="await-button ms-2 mb-2"
             [ngClass]="{ 'success-button': statusColor(element, 'imagesConfirmationStatus', 3), 'reject-button': statusColor(element, 'imagesConfirmationStatus', 2) }"
           >
             Şəkillər
           </button>
           <button
             mat-raised-button
-            class="await-button ms-2"
+            class="await-button ms-2 mb-2"
             [ngClass]="{ 'success-button': statusColor(element, 'mainInfoConfirmationStatus', 3), 'reject-button': statusColor(element, 'mainInfoConfirmationStatus', 2) }"
           >
             Məlumat

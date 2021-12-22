@@ -89,7 +89,6 @@ export class ProfileUpdateComponent implements OnInit {
       confirmationStatusId: this.parseCodeToId(this.data?.driverLicenseConfirmationStatus?.code),
       description: this.data?.driverLicenseConfirmationStatus?.description,
     });
-    console.log(this.profileFilterForm.value);
   }
 
   parseCodeToId(code) {

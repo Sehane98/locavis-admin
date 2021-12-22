@@ -180,6 +180,48 @@
 
     <div
       class="confirmation card"
+      formGroupName="passportConfirmation"
+      *ngIf="data?.passport"
+    >
+      <h2 class="text-bold">İstifadəçinin pasportu</h2>
+      <div class="img">
+        <img [src]="data?.passport?.url" alt="" />
+      </div>
+      <div class="confirmation-buttons">
+        <button
+          mat-raised-button
+          class="await-button"
+          [ngClass]="{ 'success-button': isSuccess('passportConfirmation', 3) }"
+          (click)="rejectOrConfirmData('passportConfirmation', 3)"
+        >
+          Təsdiq et
+        </button>
+        <button
+          mat-raised-button
+          class="await-button"
+          [ngClass]="{ 'reject-button': isSuccess('passportConfirmation', 2) }"
+          (click)="rejectOrConfirmData('passportConfirmation', 2)"
+        >
+          İmtina et
+        </button>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <mat-form-field class="w-50" appearance="outline">
+          <mat-label>İstifadəçinin pasportu üçün qeyd</mat-label>
+          <textarea
+            type="text"
+            formControlName="description"
+            matInput
+            autocomplete="description"
+            placeholder="İstifadəçinin pasportu üçün qeyd"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div
+      class="confirmation card"
       formGroupName="driverLicenseConfirmation"
       *ngIf="data?.driverLicense"
     >
