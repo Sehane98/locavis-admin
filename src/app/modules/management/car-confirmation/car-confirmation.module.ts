@@ -15,6 +15,8 @@ import { CarListComponent } from './car-list/car-list.component';
 import { CarUpdateComponent } from './car-update/car-update.component';
 import { ConfirmDataComponent } from 'src/app/shared/components/confirm-data/confirm-data.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [CarListComponent, CarUpdateComponent],
@@ -32,7 +34,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    MatBadgeModule,
   ],
   entryComponents: [ConfirmDataComponent],
 })

@@ -15,6 +15,8 @@ import { MatTableModule } from '@angular/material/table';
 import { ProfileConfirmationRoutingModule } from './profile-confirmation-routing.module';
 import { ConfirmDataComponent } from 'src/app/shared/components/confirm-data/confirm-data.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 
@@ -36,7 +38,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatBadgeModule
   ],
   entryComponents: [
     ConfirmDataComponent

@@ -1,1 +1,197 @@
-<p>user-list works!</p>
+<div [formGroup]="userFilterForm">
+  <div class="filter p-4">
+    <mat-form-field appearance="outline">
+      <mat-label>Lock</mat-label>
+      <mat-select formControlName="IsLocked">
+        <mat-option [value]="null"> None </mat-option>
+        <mat-option [value]="true"> Lock </mat-option>
+        <mat-option [value]="false"> Unlock </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Suspend</mat-label>
+      <mat-select formControlName="IsSuspended">
+        <mat-option [value]="null"> None </mat-option>
+        <mat-option [value]="true"> Suspended </mat-option>
+        <mat-option [value]="false"> Unsuspended </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ad</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Soyad</mat-label>
+      <input matInput formControlName="surname" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ata adı</mat-label>
+      <input matInput formControlName="middleName" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Pin</mat-label>
+      <input matInput formControlName="pin" />
+    </mat-form-field>
+  </div>
+</div>
+
+<div>
+  <ng-container *ngIf="!tableLoading; else loading">
+    <table
+      mat-table
+      [dataSource]="dataSource.data"
+      multiTemplateDataRows
+      class="mat-elevation-z8"
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element?.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Ad</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="surname">
+        <th mat-header-cell *matHeaderCellDef>Soyad</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.surname }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="middleName">
+        <th mat-header-cell *matHeaderCellDef>Ata adı</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.middleName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pin">
+        <th mat-header-cell *matHeaderCellDef>Pin</th>
+        <td mat-cell *matCellDef="let element">{{ element?.pin }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Telefon</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.phone }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.email }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Bloklanma müddəti</th>
+        <td mat-cell *matCellDef="let element">
+          {{
+            element?.lockedToTime
+              ? (element?.lockedToTime | date: "dd-MM-YYYY")
+              : "-"
+          }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let element">
+          <span style="color: red">{{
+            element?.isSuspended ? "Suspended" : ""
+          }}</span>
+          <button
+            *ngIf="!element.isSuspended"
+            (click)="changeUserActivity(element, 'suspend')"
+            mat-raised-button
+            class="await-button me-2 my-1"
+            [ngClass]="{
+              'success-button': statusColor(
+                element,
+                'imagesConfirmationStatus',
+                3
+              ),
+              'reject-button': statusColor(
+                element,
+                'imagesConfirmationStatus',
+                2
+              )
+            }"
+          >
+            Suspend
+          </button>
+          <button
+            *ngIf="!element.isLocked && !element.isSuspended"
+            (click)="lockUser(element, 'lock')"
+            mat-raised-button
+            class="await-button me-2 my-1"
+            [ngClass]="{
+              'success-button': statusColor(
+                element,
+                'mainInfoConfirmationStatus',
+                3
+              ),
+              'reject-button': statusColor(
+                element,
+                'mainInfoConfirmationStatus',
+                2
+              )
+            }"
+          >
+            Lock
+          </button>
+          <button
+            *ngIf="element.isLocked"
+            (click)="changeUserActivity(element, 'unlock')"
+            mat-raised-button
+            class="await-button me-2 my-1"
+            [ngClass]="{
+              'success-button': statusColor(
+                element,
+                'mainInfoConfirmationStatus',
+                3
+              ),
+              'reject-button': statusColor(
+                element,
+                'mainInfoConfirmationStatus',
+                2
+              )
+            }"
+          >
+            Unlock
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr
+        mat-row
+        *matRowDef="let element; columns: columnsToDisplay"
+        class="example-element-row"
+      ></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="9999">Məlumat yoxdur</td>
+      </tr>
+    </table>
+
+    <mat-paginator
+      [length]="length"
+      showFirstLastButtons
+      [pageIndex]="userFilterForm.value.PageNumber - 1"
+      [pageSizeOptions]="[5, 10, 20, 100]"
+      [pageSize]="userFilterForm.value.PageSize"
+      (page)="onChangePage($event)"
+    >
+    </mat-paginator>
+  </ng-container>
+  <ng-template #loading>
+    <div class="table-loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</div>

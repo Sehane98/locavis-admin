@@ -19,7 +19,7 @@ export class CoreService {
   
   clean(params) {
     Object.keys(params).forEach((key) => {
-      if (params[key] === '' || params[key] === null || params[key] === 0) {
+      if (params[key] === '' || params[key] === null || params[key] === {} || params[key] === 0) {
         delete params[key];
       }
     });
@@ -42,8 +42,11 @@ export class CoreService {
     return this.http.post(url, f);
   }
 
-  post(url: string, params: {} = {}, root: string = 'root'): Observable<any> {
-    return this.http.post(url, params);
+  post(url: string, body: {} = {}, params: {} = {}, root: string = 'root'): Observable<any> {
+    return this.http.post(url, body, {
+      params: this.clean(params),
+      observe: 'response',
+    });
   }
 
   put(url: string, params: {} = {}, root: string = 'root'): Observable<any> {

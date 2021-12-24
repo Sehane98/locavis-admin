@@ -24,14 +24,7 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-car-list',
   templateUrl: './car-list.component.html',
-  styleUrls: ['./car-list.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ['./car-list.component.scss']
 })
 
 
@@ -46,7 +39,9 @@ export class CarListComponent implements OnInit {
   carFilterForm!: FormGroup;
   tableLoading: boolean = false;
   currentUser = this.authService.getCurrentUser();
-
+  // pagination
+  length!: number;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -69,8 +64,7 @@ export class CarListComponent implements OnInit {
     this.coreService.get(HttpConf.URL.getCars, params)
       .subscribe(res => {
         this.dataSource = res.body?.result?.cars;
-        console.log(this.dataSource[0] );
-
+        this.length = res.body?.result?.pagination?.totalCount;
       }, (err: HttpErrorResponse) => {
         this.snackBarService.error(err);
       }).add(() => this.tableLoading = false);
@@ -79,8 +73,9 @@ export class CarListComponent implements OnInit {
   initCarFilterForm(): void {
     this.carFilterForm = this.formBuilder.group({
       count: [0],
-      PageNumber: 1,
       OnlyNotConsidered: [true],
+      PageNumber: [1],
+      PageSize: [15],
     });
 
     this.subscribeFilterForm();
@@ -96,6 +91,11 @@ export class CarListComponent implements OnInit {
       .subscribe(() => {
         this.getAllCars();
       });
+  }
+
+  onChangePage(e) {
+    this.carFilterForm.get('PageNumber')?.setValue(e.pageIndex + 1);
+    this.carFilterForm.get('PageSize')?.setValue(e.pageSize);
   }
 
   openDeleteConfirmDialog(row) {

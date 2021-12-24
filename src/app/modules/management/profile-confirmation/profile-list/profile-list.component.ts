@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
@@ -9,7 +9,13 @@ import { CoreService } from 'src/app/core/services/core.service';
 import { HttpConf } from 'src/app/core/http/http.conf';
 import { ConfirmDeleteComponent } from 'src/app/shared/components/confirm-delete/confirm-delete.component';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 
 export interface PeriodicElement {
   name: string;
@@ -27,16 +33,26 @@ export interface PeriodicElement {
   styleUrls: ['./profile-list.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
     ]),
   ],
 })
-
-
 export class ProfileListComponent implements OnInit {
-  columnsToDisplay = ['id', 'name', 'surname', 'middleName', 'phone', 'pin', 'birthDate', 'status' ];
+  columnsToDisplay = [
+    'id',
+    'name',
+    'surname',
+    'middleName',
+    'phone',
+    'pin',
+    'birthDate',
+    'status',
+  ];
   expandedElement: PeriodicElement | null | undefined;
 
   statusList = ['URGENT', 'HIGH', 'NORMAL', 'LOW'];
@@ -47,18 +63,21 @@ export class ProfileListComponent implements OnInit {
   tableLoading: boolean = false;
   currentUser = this.authService.getCurrentUser();
 
+  // pagination
+  length!: number;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private snackBarService: SnackBarService,
     private coreService: CoreService,
     private authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initProfileFilterForm();
     this.getAllProfiles();
-
   }
 
   getAllProfiles(): void {
@@ -66,20 +85,31 @@ export class ProfileListComponent implements OnInit {
 
     this.tableLoading = true;
 
-    this.coreService.get(HttpConf.URL.getProfiles, params)
-      .subscribe(res => {
-        console.log(res);
-        this.dataSource = res.body?.result?.persons;
-      }, (err: HttpErrorResponse) => {
-        this.snackBarService.error(err);
-      }).add(() => this.tableLoading = false);
+    this.coreService
+      .get(HttpConf.URL.getProfiles, params)
+      .subscribe(
+        (res) => {
+          this.dataSource = res.body?.result?.persons;
+          this.length = res.body?.result?.pagination?.totalCount;
+        },
+        (err: HttpErrorResponse) => {
+          this.snackBarService.error(err);
+        }
+      )
+      .add(() => (this.tableLoading = false));
   }
 
   initProfileFilterForm(): void {
     this.profileFilterForm = this.formBuilder.group({
       count: [0],
-      PageNumber: 1,
+      PageNumber: [1],
+      PageSize: [15],
       OnlyNotConsidered: [true],
+      name: [null],
+      surname: [null],
+      pin: [null],
+      middleName: [null],
+      phone: [null]
     });
 
     this.subscribeFilterForm();
@@ -93,11 +123,18 @@ export class ProfileListComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(() => {
+        this.profileFilterForm.get('PageNumber')?.setValue(1, { emitEvent: false });
         this.getAllProfiles();
       });
   }
 
-  statusColor(element, group, id) { 
+  onChangePage(e) {
+    this.profileFilterForm.get('PageNumber')?.setValue(e.pageIndex + 1, { emitEvent: false });
+    this.profileFilterForm.get('PageSize')?.setValue(e.pageSize, { emitEvent: false });
+    this.getAllProfiles();
+  }
+
+  statusColor(element, group, id) {
     let data = this.parseCodeToId(element[group]?.code);
 
     return data === id;
@@ -111,11 +148,10 @@ export class ProfileListComponent implements OnInit {
         break;
       case '$Rejected':
         id = 2;
-        break
+        break;
       case '$Approved':
         id = 3;
-        break
-
+        break;
     }
     return id;
   }
@@ -127,47 +163,20 @@ export class ProfileListComponent implements OnInit {
       data: {
         id: row.id,
         message: 'Are you sure?',
-        delete: (id: number) => this.coreService.delete(HttpConf.URL.getProfiles + '/' + row.id, row.id)
-      }
+        delete: (id: number) =>
+          this.coreService.delete(
+            HttpConf.URL.getProfiles + '/' + row.id,
+            row.id
+          ),
+      },
     });
 
-    dialogRef.afterClosed()
-      .pipe(
-        filter(v => !!v)
-      )
+    dialogRef
+      .afterClosed()
+      .pipe(filter((v) => !!v))
       .subscribe(() => {
         this.snackBarService.success('Successfully deleted!');
         this.getAllProfiles();
       });
   }
-
-  changeUserActivity(element, action): void {
-    const params = { userId: element.id };
-    let url;
-
-    switch (action) {
-      case 'lock':
-        url = HttpConf.USER + '/Lock';
-        break;
-      case 'unlock':
-        url = HttpConf.USER + '/Unlock';
-        break
-      case 'suspend':
-        url = HttpConf.USER + '/Suspend';
-        break
-
-    }
-
-    this.coreService.post(url, params)
-    .subscribe(res => {
-      console.log(res);
-      this.dataSource = res.body?.result?.persons;
-    }, (err: HttpErrorResponse) => {
-      this.snackBarService.error(err);
-    }).add(() => this.tableLoading = false);
-  }
-
 }
-
-
-

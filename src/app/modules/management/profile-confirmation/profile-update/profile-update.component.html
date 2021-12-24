@@ -102,7 +102,10 @@
     <div class="confirmation card" formGroupName="avatarConfirmation">
       <h2 class="text-bold">İstifadəçinin şəkli</h2>
       <div class="img">
-        <img [src]="data?.avatar?.url" alt="" />
+        <div [@rotatedState]='avatar'>
+          <img [src]="data?.avatar?.url"alt="" />
+          <!-- <p (click)="rotateImg('avatar')">Rotate</p> -->
+        </div>
       </div>
       <div class="confirmation-buttons">
         <button
@@ -143,8 +146,14 @@
     >
       <h2 class="text-bold">İstifadəçinin şəxsiyyət vəsiqəsi</h2>
       <div class="img">
-        <img [src]="data?.idCard?.backSide?.url" alt="" />
-        <img [src]="data?.idCard?.frontSide?.url" alt="" />
+        <div>
+          <img [@rotatedState]='idCardBack' [src]="data?.idCard?.backSide?.url" alt="" />
+          <!-- <p (click)="rotateImg('idCardBack')">Rotate</p> -->
+        </div>
+        <div>
+          <img [@rotatedState]='idCardFront' [src]="data?.idCard?.frontSide?.url" alt="" />
+          <!-- <p (click)="rotateImg('idCardFront')">Rotate</p> -->
+        </div>
       </div>
       <div class="confirmation-buttons">
         <button
@@ -185,7 +194,10 @@
     >
       <h2 class="text-bold">İstifadəçinin pasportu</h2>
       <div class="img">
-        <img [src]="data?.passport?.url" alt="" />
+        <div>
+          <img [@rotatedState]='passport' [src]="data?.passport?.url" alt="" />
+          <!-- <p (click)="rotateImg('passport')">Rotate</p> -->
+        </div>
       </div>
       <div class="confirmation-buttons">
         <button
@@ -227,8 +239,16 @@
     >
       <h2 class="text-bold">İstifadəçinin sürücülük vəsiqəsi</h2>
       <div class="img">
-        <img [src]="data?.driverLicense?.document?.backSide?.url" alt="" />
-        <img [src]="data?.driverLicense?.document?.frontSide?.url" alt="" />
+
+        <div>
+          <img [@rotatedState]='driverLicenseBack'  [src]="data?.driverLicense?.document?.backSide?.url" alt="" />
+          <!-- <p (click)="rotateImg('driverLicenseBack')">Rotate</p> -->
+        </div>
+        <div>
+          <img [@rotatedState]='driverLicenseFront' [src]="data?.driverLicense?.document?.frontSide?.url" alt="" />
+          <!-- <p (click)="rotateImg('driverLicenseFront')">Rotate</p> -->
+        </div>
+
       </div>
       <div class="confirmation-buttons">
         <button

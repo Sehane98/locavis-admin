@@ -15,6 +15,9 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "../core/interceptors/auth.interceptor";
 import { ConfirmDataComponent } from './components/confirm-data/confirm-data.component';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatInputModule } from "@angular/material/input";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { ConfirmDataComponent } from './components/confirm-data/confirm-data.com
     MatIconModule,
     MatDividerModule,
     MatDialogModule,
-
+    MatDatepickerModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [
     {

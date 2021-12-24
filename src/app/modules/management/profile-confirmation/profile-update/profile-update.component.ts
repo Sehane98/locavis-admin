@@ -1,3 +1,10 @@
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -14,8 +21,45 @@ import { ConfirmDeleteComponent } from 'src/app/shared/components/confirm-delete
   selector: 'app-profile-update',
   templateUrl: './profile-update.component.html',
   styleUrls: ['./profile-update.component.scss'],
+  animations: [
+    // Each unique animation requires its own trigger. The first argument of the trigger function is the name
+    trigger('rotatedState', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('90deg', style({ transform: 'rotate(-90deg)' })),
+      state('180deg', style({ transform: 'rotate(180deg)' })),
+      state('270deg', style({ transform: 'rotate(-270deg)' })),
+      transition('rotated => default', animate('400ms ease-out')),
+      transition('default => rotated', animate('400ms ease-in')),
+    ]),
+  ],
 })
 export class ProfileUpdateComponent implements OnInit {
+  state: string = 'default';
+  driverLicenseBack: string = 'default';
+  driverLicenseFront: string = 'default';
+  avatar: string = 'default';
+  passport: string = 'default';
+  idCardBack: string = 'default';
+  idCardFront: string = 'default';
+
+  rotateImg(url) {
+    switch (this[url]) {
+      case 'default':
+        this[url] = '90deg';
+        break;
+      case '90deg':
+        this[url] = '180deg';
+        break;
+      case '180deg':
+        this[url] = '270deg';
+        break;
+      case '270deg':
+        this[url] = 'default';
+        break;
+    }
+    console.log(url)
+  }
+
   profileId = this.getProfileId();
   data: any;
 
@@ -74,19 +118,31 @@ export class ProfileUpdateComponent implements OnInit {
 
   setProfileFilterForm(): void {
     (this.profileFilterForm.get('avatarConfirmation') as FormGroup).patchValue({
-      confirmationStatusId: this.parseCodeToId(this.data?.avatarConfirmationStatus?.code),
+      confirmationStatusId: this.parseCodeToId(
+        this.data?.avatarConfirmationStatus?.code
+      ),
       description: this.data?.avatarConfirmationStatus?.description,
     });
-    (this.profileFilterForm.get('passportConfirmation') as FormGroup).patchValue({
-      confirmationStatusId: this.parseCodeToId(this.data?.passportConfirmationStatus?.code),
+    (
+      this.profileFilterForm.get('passportConfirmation') as FormGroup
+    ).patchValue({
+      confirmationStatusId: this.parseCodeToId(
+        this.data?.passportConfirmationStatus?.code
+      ),
       description: this.data?.passportConfirmationStatus?.description,
     });
     (this.profileFilterForm.get('idCardConfirmation') as FormGroup).patchValue({
-      confirmationStatusId: this.parseCodeToId(this.data?.idCardConfirmationStatus?.code),
+      confirmationStatusId: this.parseCodeToId(
+        this.data?.idCardConfirmationStatus?.code
+      ),
       description: this.data?.idCardConfirmationStatus?.description,
     });
-    (this.profileFilterForm.get('driverLicenseConfirmation') as FormGroup).patchValue({
-      confirmationStatusId: this.parseCodeToId(this.data?.driverLicenseConfirmationStatus?.code),
+    (
+      this.profileFilterForm.get('driverLicenseConfirmation') as FormGroup
+    ).patchValue({
+      confirmationStatusId: this.parseCodeToId(
+        this.data?.driverLicenseConfirmationStatus?.code
+      ),
       description: this.data?.driverLicenseConfirmationStatus?.description,
     });
   }
@@ -99,11 +155,10 @@ export class ProfileUpdateComponent implements OnInit {
         break;
       case '$Rejected':
         id = 2;
-        break
+        break;
       case '$Approved':
         id = 3;
-        break
-
+        break;
     }
     return id;
   }
@@ -124,28 +179,29 @@ export class ProfileUpdateComponent implements OnInit {
         confirm: (id: number) =>
           this.coreService.post(HttpConf.URL.editProfile, params),
       },
-    }); 
+    });
 
     dialogRef
       .afterClosed()
       .pipe(filter((v) => !!v))
       .subscribe(() => {
         this.getProfileById();
-        this.snackBarService.success('Təsdiq olundu');        
-      }).add(v => this.profileFilterForm.enable());
+        this.snackBarService.success('Təsdiq olundu');
+      })
+      .add((v) => this.profileFilterForm.enable());
   }
 
   rejectOrConfirmData(rejectGroup: string, id: number): void {
     (this.profileFilterForm.get(rejectGroup) as FormGroup).patchValue({
       confirmationStatusId: id,
-    }); console.log(id, rejectGroup, this.profileFilterForm.value)
+    });
+    console.log(id, rejectGroup, this.profileFilterForm.value);
   }
 
-
   isSuccess(group, id) {
-    let data = (this.profileFilterForm.get(group) as FormGroup).value.confirmationStatusId;
+    let data = (this.profileFilterForm.get(group) as FormGroup).value
+      .confirmationStatusId;
 
     return data === id;
   }
-
 }

@@ -29,6 +29,29 @@ body {
     color: #fff; 
 }
 
+.filter {
+    display: flex;
+  
+    .badge-div {
+      position: relative;
+      .badge-span {
+        position: relative;
+        text-align: center;
+        bottom: -25px;
+        right: 50%;
+        min-width: 53px;
+        padding: 5px 10px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        font-weight: bold;
+      }
+    }
+  }
+
+mat-paginator {
+    width: 100%  !important;
+}
+
 table {
     width: 100%;
 }

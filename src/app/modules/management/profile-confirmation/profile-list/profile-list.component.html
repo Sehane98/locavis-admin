@@ -1,17 +1,69 @@
 <div [formGroup]="profileFilterForm">
+  <div class="filter p-4 mt-3">
+    <div class="badge-div me-4">
+      <button
+        mat-raised-button
+        class="success-button"       
+      >
+        Təsdiqlənən
+      </button>
+      <span class="badge-span success-button">556678</span>
+    </div>
+
+    <div class="badge-div me-4">
+      <button
+        mat-raised-button
+        class="await-button"       
+      >
+      Gözləyən
+      </button>
+      <span class="badge-span await-button">558</span>
+    </div>
+
+    <div class="badge-div me-4">
+      <button
+        mat-raised-button
+        class="reject-button"       
+      >
+        Təsdiqlənməyən
+      </button>
+      <span class="badge-span reject-button">8</span>
+    </div>
+  </div>
   <div class="filter p-4">
     <mat-form-field appearance="outline">
       <mat-label>Profillər</mat-label>
       <mat-select formControlName="OnlyNotConsidered">
-        <mat-option [value]="true"> Təsdiqlənən </mat-option>
-        <mat-option [value]="false"> Təsdiqlənməyən </mat-option>
+        <mat-option [value]="null"> Hər ikisi </mat-option>
+        <mat-option [value]="true"> Baxılan </mat-option>
+        <mat-option [value]="false"> Baxılmayan </mat-option>
       </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ad</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Soyad</mat-label>
+      <input matInput formControlName="surname" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ata adı</mat-label>
+      <input matInput formControlName="middleName" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Telefon</mat-label>
+      <input matInput formControlName="phone" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Pin</mat-label>
+      <input matInput formControlName="pin" />
     </mat-form-field>
   </div>
 </div>
 
 <div>
-  <ng-container *ngIf="dataSource.length; else loading">
+  <ng-container *ngIf="!tableLoading; else loading">
     <table
       mat-table
       [dataSource]="dataSource"
@@ -48,7 +100,7 @@
       </ng-container>
 
       <ng-container matColumnDef="pin">
-        <th mat-header-cell *matHeaderCellDef>Fin</th>
+        <th mat-header-cell *matHeaderCellDef>Pin</th>
         <td mat-cell *matCellDef="let element">{{ element?.pin }}</td>
       </ng-container>
 
@@ -66,7 +118,7 @@
             <button
               *ngIf="element?.avatarConfirmationStatus"
               mat-raised-button
-              class="await-button ms-2 mb-2"
+              class="await-button me-2 my-1"
               [ngClass]="{
                 'success-button': statusColor(
                   element,
@@ -85,7 +137,7 @@
             <button
               *ngIf="element?.idCardConfirmationStatus"
               mat-raised-button
-              class="await-button ms-2 mb-2"
+              class="await-button me-2 my-1"
               [ngClass]="{
                 'success-button': statusColor(
                   element,
@@ -104,7 +156,7 @@
             <button
               *ngIf="element?.driverLicenseConfirmationStatus"
               mat-raised-button
-              class="await-button ms-2 mb-2"
+              class="await-button me-2 my-1"
               [ngClass]="{
                 'success-button': statusColor(
                   element,
@@ -123,7 +175,7 @@
             <button
               *ngIf="element?.passportConfirmationStatus"
               mat-raised-button
-              class="await-button ms-2 mb-2"
+              class="await-button me-2 my-1"
               [ngClass]="{
                 'success-button': statusColor(
                   element,
@@ -167,11 +219,6 @@
                 <img src="/assets/img/icons/default/passport.jpg" />
               </div>
             </div>
-            <div>
-              <button mat-raised-button (click)="changeUserActivity(element,'lock')" class="ms-2 mb-2">Lock</button>
-              <button mat-raised-button (click)="changeUserActivity(element,'unlock')" class="ms-2 mb-2">Unlock</button>
-              <button mat-raised-button (click)="changeUserActivity(element,'suspend')" class="ms-2 mb-2">Suspend</button>
-            </div>
           </div>
         </td>
       </ng-container>
@@ -189,7 +236,19 @@
         *matRowDef="let row; columns: ['expandedDetail']"
         class="example-detail-row"
       ></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="9999">Məlumat yoxdur</td>
+      </tr>
     </table>
+    <mat-paginator
+      [length]="length"
+      showFirstLastButtons
+      [pageIndex]="profileFilterForm.value.PageNumber - 1"
+      [pageSizeOptions]="[5, 10, 20, 100]"
+      [pageSize]="profileFilterForm.value.PageSize"
+      (page)="onChangePage($event)"
+    >
+    </mat-paginator>
   </ng-container>
 
   <ng-template #loading>

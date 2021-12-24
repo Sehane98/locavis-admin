@@ -23,10 +23,10 @@ const routes: Routes = [
     }
   },
   {
-    path: 'task',
-    loadChildren: () => import('./task/task.module').then(m => m.TaskModule),
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
     data: {
-      title: 'Tasks'
+      title: 'users'
     }
   }
   

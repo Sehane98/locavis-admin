@@ -13,16 +13,23 @@ tr.example-detail-row {
 }
 
 .car-img {
-    display: flex;
+  display: flex;
 }
 
-.passport, .car {
+.passport,
+.car {
   margin-right: 20px;
   width: 280px;
   margin: 8px 10px;
   height: 204px;
   img {
-      width: 100%;
+    width: 100%;
   }
 }
 
+.mat-badge-content {
+}
+
+#mat-badge-content-0 {
+  background-color: black !important;
+}
